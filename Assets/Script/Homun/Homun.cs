@@ -5,27 +5,41 @@ using Script.BodyParts;
 using Script.Loaders;
 using Script.Modifiers;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Script.Homun
 {
+    [Serializable]
     public class Homun : MonoBehaviour
     {
-        private HomunStats Stats { get; set; }
+        public HomunStats Stats { get; set; }
         private List<HomunTemporalStats> TemporalStats { get; set; }
         
         // Body Parts for Legs, Core and Arms. By default they are empty. One body part per type.
-        private BodyPart Core { get; set; }
-        private BodyPart Legs { get; set; }
-        private BodyPart Arms { get; set; }
+        public BodyPart core;
+        public BodyPart legs;
+        public BodyPart arms;
+        public List<BodyPart> accessories;
 
         private void UpdateStats()
         {
             // Reset stats
             Stats = new HomunStats();
             
-            Stats.AddBodyPartStats(Core);
-            Stats.AddBodyPartStats(Legs);
-            Stats.AddBodyPartStats(Arms);
+            Stats.AddBodyPartStats(core);
+            Stats.AddBodyPartStats(legs);
+            Stats.AddBodyPartStats(arms);
+        }
+        
+        public List<ModifierData> GetActiveStatusModifiers()
+        {
+            var modifiers = new List<ModifierData>();
+            foreach (var stat in TemporalStats)
+            {
+                modifiers.Add(stat.Source);
+            }
+
+            return modifiers;
         }
 
         public void EquipBodyPart(int bodyPartId)
@@ -33,28 +47,31 @@ namespace Script.Homun
             var bodyPart = BodyPartManager.Instance.GetPartById(bodyPartId);
             AddBodyPart(bodyPart);
         }
-        
+
         private void AddBodyPart(BodyPart part)
         {
             switch (part.partType)
             {
                 case BodyPartType.Core:
-                    Core = part;
+                    core = part;
                     break;
                 case BodyPartType.Legs:
-                    Legs = part;
+                    legs = part;
                     break;
                 case BodyPartType.Arms:
-                    Arms = part;
+                    arms = part;
+                    break;
+                case BodyPartType.Accessory:
+                    accessories.Add(part);
                     break;
                 default:
-                    break;
+                    throw new ArgumentOutOfRangeException();
             }
             UpdateStats();
         }
         
         // This function will add the temporal stat modifiers to the HomunStat and return it modified, without modifying the original one
-        public HomunStats GetModifiedStats()
+        public HomunStats GetStats()
         {
             var modifiedStats = Stats.Clone();
             foreach (var stat in TemporalStats)
@@ -72,16 +89,87 @@ namespace Script.Homun
                 modifiedStats.CriticalDamage += stat.incCriticalDamage + (modifiedStats.CriticalDamage * stat.incPercentCriticalDamage);
                 modifiedStats.Accuracy += stat.incAccuracy + (modifiedStats.Accuracy * stat.incPercentAccuracy);
             }
+            // Next, we take all the modifiedStats, and use a Math.max(0, value) to avoid negative numbers
+            modifiedStats.Health = Math.Max(0, modifiedStats.Health);
+            modifiedStats.Mana = Math.Max(0, modifiedStats.Mana);
+            modifiedStats.DamageReduction = Math.Max(0, modifiedStats.DamageReduction);
+            modifiedStats.Attack = Math.Max(0, modifiedStats.Attack);
+            modifiedStats.Speed = Math.Max(0, modifiedStats.Speed);
+            modifiedStats.AbilityPower = Math.Max(0, modifiedStats.AbilityPower);
+            modifiedStats.Evasion = Math.Max(0, modifiedStats.Evasion);
+            modifiedStats.CriticalChance = Math.Max(0, modifiedStats.CriticalChance);
+            modifiedStats.CriticalDamage = Math.Max(0, modifiedStats.CriticalDamage);
+            modifiedStats.Accuracy = Math.Max(0, modifiedStats.Accuracy);
 
             return modifiedStats;
         }
         
+        
+        public void Attack(Homun target)
+        {
+            // Get all the modifiers
+            var (enemyModifiers, selfModifiers) = GetAllBodyPartsOnHitModifiers();
+            // Apply the modifiers to the target
+            foreach (var modifier in enemyModifiers)
+            {
+                target.ReceiveTemporalStatus(modifier);
+            }
+            
+            // Apply the modifiers to the self
+            foreach (var modifier in selfModifiers)
+            {
+                ReceiveTemporalStatus(modifier);
+            }
+            
+            // Calculate the damage
+            var damage = Stats.Attack;
+            // Check if the attack is critical
+            if (Random.value < Stats.CriticalChance)
+            {
+                damage *= (Stats.CriticalDamage/100);
+            }
+            // Apply the damage to the target
+            Debug.Log("Dealing " + damage + " damage to the target");
+            target.ReceiveDamage(damage);
+        }
+
+        private (List<ModifierData>, List<ModifierData>) GetAllBodyPartsOnHitModifiers()
+        {
+            var enemyModifiers = new List<ModifierData>();
+            enemyModifiers.AddRange(core.stats.EnemyInflictingModifiers);
+
+            var selfModifiers = new List<ModifierData>();
+            selfModifiers.AddRange(core.stats.SelfInflictingModifiers);
+            
+            return (enemyModifiers, selfModifiers);
+        }
+
+        public void ReceiveDamage(float damage)
+        {
+            // Calculate the damage reduction
+            var damageReduction = Stats.DamageReduction;
+            // Apply the damage reduction
+            damage -= damage * (damageReduction / 100);
+            // Apply the damage to the health
+            Stats.Health -= damage;
+            Debug.Log("Received " + damage + " damage. Current health: " + Stats.Health);
+        }
+
+        public void ReceiveTemporalStatus(ModifierData modifierData)
+        {
+            if (Random.value < modifierData.chance)
+            {
+                Debug.Log("Applying modifier: " + modifierData.modifier);
+                TemporalStats.Add(new HomunTemporalStats(modifierData));
+            }
+        }
         
         // MonoBehaviour methods
         private void Start()
         {
             Stats = new HomunStats();
             TemporalStats = new List<HomunTemporalStats>();
+            accessories = new List<BodyPart>();
         }
         
         private void Update()

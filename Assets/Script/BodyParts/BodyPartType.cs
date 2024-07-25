@@ -6,6 +6,7 @@ namespace Script.BodyParts
     {
         Core,
         Arms,
-        Legs
+        Legs,
+        Accessory
     }
 }

@@ -25,8 +25,8 @@ namespace Script.Homun
             Speed = 1;
             AbilityPower = 10;
             Evasion = 0;
-            CriticalChance = 0;
-            CriticalDamage = 0;
+            CriticalChance = 5;
+            CriticalDamage = 25;
             Accuracy = 100;
         }
         

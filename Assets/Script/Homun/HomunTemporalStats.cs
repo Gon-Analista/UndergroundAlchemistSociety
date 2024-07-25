@@ -57,6 +57,10 @@ namespace Script.Homun
                     incPercentDamageReduction = -0.5f;
                     Duration = modifierData.duration;
                     break;
+                case StatusModifier.Fear:
+                    incPercentAccuracy = -0.5f;
+                    Duration = modifierData.duration;
+                    break;
                 default:
                     break;
             }

@@ -12,13 +12,9 @@ namespace Script.Modifiers
         Bleed,
         Freeze,
         Sleep,
-        Confuse,
-        Charm,
         Fear,
         Taunt,
-        Root,
         Disarm,
-        Cripple,
         Weakness,
         Vulnerability,
     }
