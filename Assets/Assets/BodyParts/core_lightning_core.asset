@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb75b2b351d943afa26e09a8e102d22c, type: 3}
   m_Name: core_lightning_core
   m_EditorClassIdentifier: 
-  id: 0
+  id: 1
   name: Lightning Core
   partType: 0
+  sprite: {fileID: 21300000, guid: 1c4e45c7357224bd0ae641b6962e7684, type: 3}
+  color: {r: 0.92080235, g: 1, b: 0, a: 1}
+  maskTexture: {fileID: 2800000, guid: 1c4e45c7357224bd0ae641b6962e7684, type: 3}
   stats:
     incHealth: 100
     incMana: 0

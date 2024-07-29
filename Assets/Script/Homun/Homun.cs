@@ -21,6 +21,8 @@ namespace Script.Homun
         public BodyPart arms;
         public List<BodyPart> accessories;
 
+        public bool isPlayer;
+
         private void UpdateStats()
         {
             // Reset stats
@@ -164,12 +166,34 @@ namespace Script.Homun
             }
         }
         
+        private GameObject InitializeBodyPart(BodyPart bodyPart, Vector2 localPosition)
+        {
+            if (bodyPart != null)
+            {
+                GameObject partObject = new GameObject(bodyPart.name);
+                partObject.transform.parent = transform; // Set as child of Homun
+                partObject.transform.localPosition = localPosition;
+
+                SpriteRenderer spriteRenderer = partObject.AddComponent<SpriteRenderer>();
+                BodyPartDisplay bodyPartDisplay = partObject.AddComponent<BodyPartDisplay>();
+                bodyPartDisplay.SetBodyPart(bodyPart, isPlayer);
+
+                return partObject;
+            }
+            return null;
+        }
+        
         // MonoBehaviour methods
         private void Start()
         {
             Stats = new HomunStats();
             TemporalStats = new List<HomunTemporalStats>();
             accessories = new List<BodyPart>();
+            
+            // Initialize the body parts GameObjects
+            InitializeBodyPart(core, Vector2.zero);
+            InitializeBodyPart(legs, Vector2.zero);
+            InitializeBodyPart(arms, Vector2.zero);
         }
         
         private void Update()
@@ -186,7 +210,8 @@ namespace Script.Homun
                     TemporalStats[i].Duration -= Time.deltaTime;
                 }
             }
-
         }
+        
+        
     }
 }

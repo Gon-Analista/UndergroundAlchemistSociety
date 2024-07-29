@@ -10,6 +10,10 @@ namespace Script.BodyParts
         public new string name;
 
         [SerializeField] public BodyPartType partType;
+        [SerializeField] public Sprite sprite;
+        [SerializeField] public Color color = Color.white;
+        [SerializeField] public Texture2D maskTexture;
+        
         [SerializeField] public BodyPartStats stats;
 
         public BodyPart(BodyPartType type)
