@@ -23,7 +23,7 @@ namespace Script.BodyParts
             {
                 _spriteRenderer.sprite = bodyPart.sprite;
                 _spriteRenderer.color = bodyPart.color;
-                transform.localScale = new Vector3(transform.localScale.x * 3, transform.localScale.y * 3, transform.localScale.z);
+                transform.localScale = new Vector3(transform.localScale.x * 4, transform.localScale.y * 4, transform.localScale.z);
             }
 
             // Handle flipping the sprite if isFlipped is true
@@ -86,14 +86,14 @@ namespace Script.BodyParts
             switch (bodyPart.partType)
             {
                 case BodyPartType.Core:
-                    return 0;
+                    return 10;
                 case BodyPartType.Legs:
-                    return 1;
+                    return 11;
                 case BodyPartType.Arms:
-                    return 2;
+                    return 12;
                 case BodyPartType.Accessory:
                 default:
-                    return 5;
+                    return 15;
             }
         }
     }

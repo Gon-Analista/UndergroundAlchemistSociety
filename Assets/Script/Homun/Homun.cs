@@ -44,7 +44,7 @@ namespace Script.Homun
             return modifiers;
         }
 
-        public void EquipBodyPart(int bodyPartId)
+        public void EquipBodyPart(string bodyPartId)
         {
             var bodyPart = BodyPartManager.Instance.GetPartById(bodyPartId);
             AddBodyPart(bodyPart);
@@ -125,6 +125,10 @@ namespace Script.Homun
             
             // Calculate the damage
             var damage = Stats.Attack;
+            // Vary the damage by a random factor
+            damage *= Random.Range(0.9f, 1.1f);
+            
+            
             // Check if the attack is critical
             if (Random.value < Stats.CriticalChance)
             {

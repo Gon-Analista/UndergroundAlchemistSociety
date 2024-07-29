@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb75b2b351d943afa26e09a8e102d22c, type: 3}
   m_Name: arms_beast
   m_EditorClassIdentifier: 
-  id: 0
+  id: arms_beast
   name: Beast Arms
+  description: 
   partType: 1
   sprite: {fileID: 21300000, guid: be996db58e5f04879865ce17b869217f, type: 3}
   color: {r: 1, g: 0, b: 0.1361413, a: 1}

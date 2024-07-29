@@ -11,6 +11,8 @@ TagManager:
   - 
   - Water
   - UI
+  - Background
+  - Foreground
   - 
   - 
   - 
@@ -34,9 +36,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - UI
   m_SortingLayers:
   - name: Default
     uniqueID: 0

@@ -22,7 +22,7 @@ namespace Script.Loaders
             }
         }
 
-        public BodyPart GetPartById(int id)
+        public BodyPart GetPartById(string id)
         {
             return bodyPartDatabase.Find(item => item.id == id);
         }
