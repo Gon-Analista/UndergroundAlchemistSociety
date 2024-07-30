@@ -194,10 +194,16 @@ namespace Script.Homun
             TemporalStats = new List<HomunTemporalStats>();
             accessories = new List<BodyPart>();
             
+            UpdateStats();
+            
             // Initialize the body parts GameObjects
             InitializeBodyPart(core, Vector2.zero);
             InitializeBodyPart(legs, Vector2.zero);
             InitializeBodyPart(arms, Vector2.zero);
+            foreach (var accessory in accessories)
+            {
+                InitializeBodyPart(accessory, Vector2.zero);
+            }
         }
         
         private void Update()
