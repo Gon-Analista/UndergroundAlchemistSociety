@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: core_ice_core
   name: Ice Core
-  description: 
+  description: A core that enhances your health and damage reduction, with a chance
+    to slow enemies.
   partType: 0
   sprite: {fileID: 21300000, guid: 1c4e45c7357224bd0ae641b6962e7684, type: 3}
   color: {r: 0, g: 0.9999995, b: 1, a: 1}

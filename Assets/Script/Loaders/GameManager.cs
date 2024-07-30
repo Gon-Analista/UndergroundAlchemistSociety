@@ -108,12 +108,13 @@ namespace Script.Loaders
             {
                 homun = gameObject.AddComponent<Homun.Homun>();
                 homun.isPlayer = true;
-                homun.gameObject.GetComponent<Renderer>().enabled = false;
             }
 
+            homun.gameObject.SetActive(true);
             homun.EquipBodyPart(core);
             SceneLoader sceneLoader = gameObject.AddComponent<SceneLoader>();
             sceneLoader.LoadFightScene();
         }
+
     }
 }

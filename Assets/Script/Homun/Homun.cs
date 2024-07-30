@@ -376,7 +376,5 @@ namespace Script.Homun
             homun.UpdateStats();
             return homun;
         }
-
-
     }
 }

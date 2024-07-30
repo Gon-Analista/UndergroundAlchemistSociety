@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: core_lightning_core
   name: Lightning Core
-  description: 
+  description: A core that increases your critical chance, and critical damage, with
+    a chance to paralyze enemies.
   partType: 0
   sprite: {fileID: 21300000, guid: 1c4e45c7357224bd0ae641b6962e7684, type: 3}
   color: {r: 1, g: 1, b: 0, a: 1}

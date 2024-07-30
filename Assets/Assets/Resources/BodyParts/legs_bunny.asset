@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: legs_bunny
   name: Bunny Legs
-  description: 
+  description: Legs that enhance your evasion and slightly increase your speed, making
+    you more agile.
   partType: 2
   sprite: {fileID: 21300000, guid: f7e5aa1160527467082ba46c2864e95e, type: 3}
   color: {r: 0.74597174, g: 1, b: 0.6084906, a: 1}

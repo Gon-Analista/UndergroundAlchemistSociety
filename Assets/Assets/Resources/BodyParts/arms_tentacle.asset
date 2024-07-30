@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: arms_tentacle
   name: Tentacle Arms
-  description: 
+  description: Arms with the ability to occasionally stun enemies, disrupting their
+    actions.
   partType: 1
   sprite: {fileID: 21300000, guid: 9583aba651ebd46e9b752d6dbfd1a905, type: 3}
   color: {r: 1, g: 0, b: 0.9425912, a: 1}
