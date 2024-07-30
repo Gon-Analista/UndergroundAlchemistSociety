@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: core_fire_core
   name: Fire Core
-  description: 
+  description: A core that boosts your attack, and ability power, with a chance to
+    burn enemies.
   partType: 0
   sprite: {fileID: 21300000, guid: 1c4e45c7357224bd0ae641b6962e7684, type: 3}
   color: {r: 1, g: 0, b: 0.039215565, a: 1}

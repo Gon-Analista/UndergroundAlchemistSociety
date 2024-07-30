@@ -50,6 +50,21 @@ namespace Script.DropSystem
                  buttonImage.sprite = bodyPart.sprite;
                  buttonImage.color = bodyPart.color;
 
+                 switch (bodyPart.partType)
+                 {
+                     // Change the positions of the image for each body part
+                        case BodyPartType.Legs:
+                            buttonImage.rectTransform.anchoredPosition = new Vector2(-35, 140);
+                            break;
+                        case BodyPartType.Accessory:
+                            buttonImage.rectTransform.anchoredPosition = new Vector2(-149, 3.8f);
+                            break;
+                        case BodyPartType.Arms:
+                        case BodyPartType.Core:
+                        default:
+                            break;
+                 }
+
                  RectTransform rectTransform = itemCardButton.GetComponent<RectTransform>();
                  rectTransform.anchoredPosition += localPosition;
                  

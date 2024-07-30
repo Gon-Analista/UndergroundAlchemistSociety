@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: acc_scorpion_tail
   name: Scorpion Tail
-  description: 
+  description: A venomous accessory that has a chance to poison enemies for a prolonged
+    duration.
   partType: 3
   sprite: {fileID: 21300000, guid: fe0631abbc7d04b7bbe8b23f3f094102, type: 3}
   color: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
