@@ -20,12 +20,12 @@ namespace Script.Colosseum
 
         public int GetPlayerHealth()
         {
-            return (int)playerFighter.Stats.Health;
+            return (int)playerFighter.GetStats().Health;
         }
         
         public int GetEnemyHealth()
         {
-            return (int)enemyFighters[0].Stats.Health;
+            return (int)enemyFighters[0].GetStats().Health;
         }
         
         public List<ModifierData> GetPlayerModifiers()
