@@ -15,12 +15,12 @@ namespace Script.Homun
         public HomunStats Stats { get; set; }
         private List<HomunTemporalStats> TemporalStats { get; set; }
         private float dotTimer = 0f;
-        
+
         // Body Parts for Legs, Core and Arms. By default they are empty. One body part per type.
         public BodyPart core;
         public BodyPart legs;
         public BodyPart arms;
-        public List<BodyPart> accessories;
+        public List<BodyPart> accessories = new ();
 
         public bool isPlayer;
 
@@ -28,7 +28,7 @@ namespace Script.Homun
         {
             // Reset stats
             Stats = new HomunStats();
-            
+
             Stats.AddBodyPartStats(core);
             Stats.AddBodyPartStats(legs);
             Stats.AddBodyPartStats(arms);
@@ -37,7 +37,7 @@ namespace Script.Homun
                 Stats.AddBodyPartStats(accessory);
             }
         }
-        
+
         public List<ModifierData> GetActiveStatusModifiers()
         {
             var modifiers = new List<ModifierData>();
@@ -79,9 +79,10 @@ namespace Script.Homun
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
             UpdateStats();
         }
-        
+
         // This function will add the temporal stat modifiers to the HomunStat and return it modified, without modifying the original one
         public HomunStats GetStats()
         {
@@ -92,15 +93,20 @@ namespace Script.Homun
                 // Remember that the attributes are named incStat, incPercentStat, etc.
                 modifiedStats.Health += stat.incHealth + (modifiedStats.Health * stat.incPercentHealth);
                 modifiedStats.Mana += stat.incMana + (modifiedStats.Mana * stat.incPercentMana);
-                modifiedStats.DamageReduction += stat.incDamageReduction + (modifiedStats.DamageReduction * stat.incPercentDamageReduction);
+                modifiedStats.DamageReduction += stat.incDamageReduction +
+                                                 (modifiedStats.DamageReduction * stat.incPercentDamageReduction);
                 modifiedStats.Attack += stat.incAttack + (modifiedStats.Attack * stat.incPercentAttack);
                 modifiedStats.Speed += stat.incSpeed + (modifiedStats.Speed * stat.incPercentSpeed);
-                modifiedStats.AbilityPower += stat.incAbilityPower + (modifiedStats.AbilityPower * stat.incPercentAbilityPower);
+                modifiedStats.AbilityPower +=
+                    stat.incAbilityPower + (modifiedStats.AbilityPower * stat.incPercentAbilityPower);
                 modifiedStats.Evasion += stat.incEvasion + (modifiedStats.Evasion * stat.incPercentEvasion);
-                modifiedStats.CriticalChance += stat.incCriticalChance + (modifiedStats.CriticalChance * stat.incPercentCriticalChance);
-                modifiedStats.CriticalDamage += stat.incCriticalDamage + (modifiedStats.CriticalDamage * stat.incPercentCriticalDamage);
+                modifiedStats.CriticalChance += stat.incCriticalChance +
+                                                (modifiedStats.CriticalChance * stat.incPercentCriticalChance);
+                modifiedStats.CriticalDamage += stat.incCriticalDamage +
+                                                (modifiedStats.CriticalDamage * stat.incPercentCriticalDamage);
                 modifiedStats.Accuracy += stat.incAccuracy + (modifiedStats.Accuracy * stat.incPercentAccuracy);
             }
+
             // Next, we take all the modifiedStats, and use a Math.max(0, value) to avoid negative numbers
             modifiedStats.Health = Math.Max(0, modifiedStats.Health);
             modifiedStats.Mana = Math.Max(0, modifiedStats.Mana);
@@ -115,8 +121,8 @@ namespace Script.Homun
 
             return modifiedStats;
         }
-        
-        
+
+
         public void Attack(Homun target)
         {
             // Get all the modifiers
@@ -126,24 +132,25 @@ namespace Script.Homun
             {
                 target.ReceiveTemporalStatus(modifier);
             }
-            
+
             // Apply the modifiers to the self
             foreach (var modifier in selfModifiers)
             {
                 ReceiveTemporalStatus(modifier);
             }
-            
+
             // Calculate the damage
             var damage = Stats.Attack;
             // Vary the damage by a random factor
             damage *= Random.Range(0.9f, 1.1f);
-            
-            
+
+
             // Check if the attack is critical
             if (Random.value < Stats.CriticalChance)
             {
-                damage *= (Stats.CriticalDamage/100);
+                damage *= (Stats.CriticalDamage / 100);
             }
+
             // Apply the damage to the target
             Debug.Log("Dealing " + damage + " damage to the target");
             target.ReceiveDamage(damage);
@@ -159,7 +166,7 @@ namespace Script.Homun
             {
                 enemyModifiers.AddRange(accessory.stats.EnemyInflictingModifiers);
             }
-       
+
 
             var selfModifiers = new List<ModifierData>();
             selfModifiers.AddRange(core.stats.SelfInflictingModifiers);
@@ -169,8 +176,8 @@ namespace Script.Homun
             {
                 selfModifiers.AddRange(accessory.stats.SelfInflictingModifiers);
             }
-          
-            
+
+
             return (enemyModifiers, selfModifiers);
         }
 
@@ -193,7 +200,7 @@ namespace Script.Homun
                 TemporalStats.Add(new HomunTemporalStats(modifierData));
             }
         }
-        
+
         private GameObject InitializeBodyPart(BodyPart bodyPart, Vector2 localPosition)
         {
             if (bodyPart != null)
@@ -208,17 +215,18 @@ namespace Script.Homun
 
                 return partObject;
             }
+
             return null;
         }
-        
+
         // MonoBehaviour methods
         private void Start()
         {
             Stats = new HomunStats();
             TemporalStats = new List<HomunTemporalStats>();
-            
+
             UpdateStats();
-            
+
             // Initialize the body parts GameObjects
             InitializeBodyPart(core, Vector2.zero);
             InitializeBodyPart(legs, Vector2.zero);
@@ -228,72 +236,76 @@ namespace Script.Homun
                 InitializeBodyPart(accessory, Vector2.zero);
             }
         }
-        
-    private void Update(){
-        dotTimer += Time.deltaTime;
 
-        if (dotTimer >= 1f)
+        private void Update()
         {
-            ApplyDotEffects();
-            dotTimer = 0f; 
-        }
+            dotTimer += Time.deltaTime;
 
-        // Actualizar la duración de los efectos temporales
-        for (var i = TemporalStats.Count - 1; i >= 0; i--)
-        {
-            if (TemporalStats[i].Duration <= 0)
+            if (dotTimer >= 1f)
             {
-                TemporalStats.RemoveAt(i);
+                ApplyDotEffects();
+                dotTimer = 0f;
             }
-            else
-            {
-                TemporalStats[i].Duration -= Time.deltaTime;
-            }
-        }
-    }
 
-    private void ApplyDotEffects()
-    {
-        float poisonDamage = 0f;
-        float burnDamage = 0f;
-        float bleedDamage = 0f;
-
-        foreach (var stat in TemporalStats)
-        {
-            if (Time.time - stat.LastDotTime >= 1f)
+            // Actualizar la duración de los efectos temporales
+            for (var i = TemporalStats.Count - 1; i >= 0; i--)
             {
-                switch (stat.DotType)
+                if (TemporalStats[i].Duration <= 0)
                 {
-                    case StatusModifier.Poison:
-                        poisonDamage += stat.DotDamage;
-                        break;
-                    case StatusModifier.Burn:
-                        burnDamage += stat.DotDamage;
-                        break;
-                    case StatusModifier.Bleed:
-                        bleedDamage += stat.DotDamage;
-                        break;
+                    TemporalStats.RemoveAt(i);
                 }
-                stat.LastDotTime = Time.time;
+                else
+                {
+                    TemporalStats[i].Duration -= Time.deltaTime;
+                }
             }
         }
 
-        if (poisonDamage > 0)
+        private void ApplyDotEffects()
         {
-            ReceiveDamage(poisonDamage);
-            Debug.Log($"{gameObject.name} received {poisonDamage} poison damage");
+            float poisonDamage = 0f;
+            float burnDamage = 0f;
+            float bleedDamage = 0f;
+
+            foreach (var stat in TemporalStats)
+            {
+                if (Time.time - stat.LastDotTime >= 1f)
+                {
+                    switch (stat.DotType)
+                    {
+                        case StatusModifier.Poison:
+                            poisonDamage += stat.DotDamage;
+                            break;
+                        case StatusModifier.Burn:
+                            burnDamage += stat.DotDamage;
+                            break;
+                        case StatusModifier.Bleed:
+                            bleedDamage += stat.DotDamage;
+                            break;
+                    }
+
+                    stat.LastDotTime = Time.time;
+                }
+            }
+
+            if (poisonDamage > 0)
+            {
+                ReceiveDamage(poisonDamage);
+                Debug.Log($"{gameObject.name} received {poisonDamage} poison damage");
+            }
+
+            if (burnDamage > 0)
+            {
+                ReceiveDamage(burnDamage);
+                Debug.Log($"{gameObject.name} received {burnDamage} burn damage");
+            }
+
+            if (bleedDamage > 0)
+            {
+                ReceiveDamage(bleedDamage);
+                Debug.Log($"{gameObject.name} received {bleedDamage} bleed damage");
+            }
         }
-        if (burnDamage > 0)
-        {
-            ReceiveDamage(burnDamage);
-            Debug.Log($"{gameObject.name} received {burnDamage} burn damage");
-        }
-        if (bleedDamage > 0)
-        {
-            ReceiveDamage(bleedDamage);
-            Debug.Log($"{gameObject.name} received {bleedDamage} bleed damage");
-        }
-    }
 
         public void Clone(Homun homun)
         {
@@ -303,6 +315,7 @@ namespace Script.Homun
             {
                 TemporalStats.Add(stat);
             }
+
             core = homun.core;
             legs = homun.legs;
             arms = homun.arms;
@@ -312,14 +325,14 @@ namespace Script.Homun
                 accessories.Add(accessory);
             }
         }
-        
+
         public static Homun CreateRandomHomun(int difficulty, GameObject gameObject)
         {
             var homun = gameObject.AddComponent<Homun>();
             homun.Stats = new HomunStats();
             homun.TemporalStats = new List<HomunTemporalStats>();
             homun.accessories = new List<BodyPart>();
-            
+
             // Get a random core
             homun.core = BodyPartManager.Instance.GetRandomBodyPartByType(BodyPartType.Core);
             homun.legs = null;
@@ -331,13 +344,13 @@ namespace Script.Homun
             {
                 homun.core = BodyPartManager.Instance.GetPartById("core_weakling");
             }
-            
+
             // Get a random leg
             if (difficulty >= 1)
             {
                 homun.core = BodyPartManager.Instance.GetRandomBodyPartByType(BodyPartType.Core);
             }
-            
+
             // Get a random arm
             if (difficulty >= 2)
             {
@@ -348,16 +361,17 @@ namespace Script.Homun
             {
                 homun.arms = BodyPartManager.Instance.GetRandomBodyPartByType(BodyPartType.Arms);
             }
-            
+
             // Get a random accessory
             if (difficulty >= 4)
             {
                 homun.accessories.Add(BodyPartManager.Instance.GetRandomBodyPartByType(BodyPartType.Accessory));
             }
-            
+
             homun.UpdateStats();
             return homun;
         }
-        
-        
+
+
     }
+}

@@ -81,7 +81,7 @@ namespace Script.Colosseum
             
             // Update charge using the Homun's Speed stat and the chargeSpeedMultiplier
             playerCharge += Time.deltaTime * playerFighter.GetStats().Speed * chargeSpeedMultiplier;
-            enemyCharge += Time.deltaTime * enemyFighters[0].GetStats().Speed * chargeSpeedMultiplier;
+            enemyCharge += Time.deltaTime * enemyFighter.GetStats().Speed * chargeSpeedMultiplier;
             
             // Check if the player and enemy are able to attack. If they attack at the same time, 50% chance of the player attacking first.
             var isEnemyAttacking = enemyCharge >= 1;
