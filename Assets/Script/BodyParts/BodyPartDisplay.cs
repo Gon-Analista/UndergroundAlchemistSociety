@@ -93,7 +93,7 @@ namespace Script.BodyParts
                     return 12;
                 case BodyPartType.Accessory:
                 default:
-                    return 15;
+                    return 10;
             }
         }
     }

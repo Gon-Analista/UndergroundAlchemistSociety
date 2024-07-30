@@ -14,8 +14,11 @@ namespace Script.Modifiers
         Sleep,
         Fear,
         Taunt,
-        Disarm,
         Weakness,
         Vulnerability,
+        Shield,
+        Block,
+        ReflectDamage,
+        Regeneration
     }
 }
