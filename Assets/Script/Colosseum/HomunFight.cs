@@ -1,24 +1,43 @@
 using System.Collections.Generic;
+using Script.Loaders;
 using Script.Modifiers;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Script.Colosseum
 {
+    public enum FightResult
+    {
+        Won,
+        Lost,
+        OnGoing
+    }
+    
     public class HomunFight : MonoBehaviour
     {
         public Homun.Homun playerFighter;
-        public List<Homun.Homun> enemyFighters;
+        public Homun.Homun enemyFighter;
         public float playerCharge;
         public float enemyCharge;
 
         // Multiplier to slow down the charge rate
         public float chargeSpeedMultiplier = 0.1f; // Ajustar este valor según sea necesario
+        public FightResult result = FightResult.OnGoing;
         
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
-        
+            // Take GameManager's homun as the player, and add it to the GameObject's children.
+            var playerHomunPosMarker = GameObject.Find("PlayerHomun");
+            playerFighter = playerHomunPosMarker.AddComponent<Homun.Homun>();
+            playerFighter.Clone(GameManager.Instance.homun);
+            playerFighter.isPlayer = true;
+            
+            // Set the first value of enemyFighters to EnemyHomun GameObject
+            var enemyHomunPosMarker = GameObject.Find("EnemyHomun");
+            enemyFighter = Homun.Homun.CreateRandomHomun(GameManager.Instance.CalculateDifficulty(), enemyHomunPosMarker.gameObject);
+            result = FightResult.OnGoing;
         }
 
         public int GetPlayerHealth()
@@ -28,7 +47,7 @@ namespace Script.Colosseum
         
         public int GetEnemyHealth()
         {
-            return (int)enemyFighters[0].GetStats().Health;
+            return (int)enemyFighter.GetStats().Health;
         }
         
         public List<ModifierData> GetPlayerModifiers()
@@ -38,22 +57,9 @@ namespace Script.Colosseum
         
         public List<ModifierData> GetEnemyModifiers()
         {
-            return enemyFighters[0].GetActiveStatusModifiers();
+            return enemyFighter.GetActiveStatusModifiers();
         }
         
-        // Function to see if theres any enemy alive, and get its index
-        private int GetAliveEnemy()
-        {
-            for (int i = 0; i < enemyFighters.Count; i++)
-            {
-                if (enemyFighters[i].Stats.Health > 0)
-                {
-                    return i;
-                }
-            }
-            return -1;
-        }
-
         // Update is called once per frame
         void Update()
         {
@@ -61,14 +67,15 @@ namespace Script.Colosseum
             if (playerFighter.Stats.Health <= 0)
             {
                 // Player lost
+                result = FightResult.Lost;
                 return;
             }
             
             // Check if there's any enemy alive
-            var enemyIndex = GetAliveEnemy();
-            if (enemyIndex == -1)
+            if (enemyFighter.Stats.Health <= 0)
             {
                 // Player won
+                result = FightResult.Won;
                 return;
             }
             
@@ -84,23 +91,23 @@ namespace Script.Colosseum
             {
                 if (Random.value < 0.5f)
                 {
-                    playerFighter.Attack(enemyFighters[enemyIndex]);
+                    playerFighter.Attack(enemyFighter);
                     playerCharge = 0;
                 }
                 else
                 {
-                    enemyFighters[enemyIndex].Attack(playerFighter);
+                    enemyFighter.Attack(playerFighter);
                     enemyCharge = 0;
                 }
             }
             else if (isEnemyAttacking)
             {
-                enemyFighters[enemyIndex].Attack(playerFighter);
+                enemyFighter.Attack(playerFighter);
                 enemyCharge = 0;
             }
             else if (isPlayerAttacking)
             {
-                playerFighter.Attack(enemyFighters[enemyIndex]);
+                playerFighter.Attack(enemyFighter);
                 playerCharge = 0;
             }
         }

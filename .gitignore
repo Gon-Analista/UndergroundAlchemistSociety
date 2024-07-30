@@ -26,6 +26,9 @@
 # Visual Studio cache directory
 .vs/
 
+# Vscode stuff
+.vscode/
+
 # Intellij-based ides directories
 .idea/
 

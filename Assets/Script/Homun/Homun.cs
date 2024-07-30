@@ -55,6 +55,11 @@ namespace Script.Homun
             AddBodyPart(bodyPart);
         }
 
+        public void EquipBodyPart(BodyPart bodyPart)
+        {
+            AddBodyPart(bodyPart);
+        }
+
         private void AddBodyPart(BodyPart part)
         {
             switch (part.partType)
@@ -289,7 +294,70 @@ namespace Script.Homun
             Debug.Log($"{gameObject.name} received {bleedDamage} bleed damage");
         }
     }
+
+        public void Clone(Homun homun)
+        {
+            Stats = homun.Stats.Clone();
+            TemporalStats = new List<HomunTemporalStats>();
+            foreach (var stat in homun.TemporalStats)
+            {
+                TemporalStats.Add(stat);
+            }
+            core = homun.core;
+            legs = homun.legs;
+            arms = homun.arms;
+            accessories = new List<BodyPart>();
+            foreach (var accessory in homun.accessories)
+            {
+                accessories.Add(accessory);
+            }
+        }
+        
+        public static Homun CreateRandomHomun(int difficulty, GameObject gameObject)
+        {
+            var homun = gameObject.AddComponent<Homun>();
+            homun.Stats = new HomunStats();
+            homun.TemporalStats = new List<HomunTemporalStats>();
+            homun.accessories = new List<BodyPart>();
+            
+            // Get a random core
+            homun.core = BodyPartManager.Instance.GetRandomBodyPartByType(BodyPartType.Core);
+            homun.legs = null;
+            homun.arms = null;
+            homun.accessories.Clear();
+            homun.isPlayer = false;
+
+            if (difficulty == 0)
+            {
+                homun.core = BodyPartManager.Instance.GetPartById("core_weakling");
+            }
+            
+            // Get a random leg
+            if (difficulty >= 1)
+            {
+                homun.core = BodyPartManager.Instance.GetRandomBodyPartByType(BodyPartType.Core);
+            }
+            
+            // Get a random arm
+            if (difficulty >= 2)
+            {
+                homun.legs = BodyPartManager.Instance.GetRandomBodyPartByType(BodyPartType.Legs);
+            }
+
+            if (difficulty >= 3)
+            {
+                homun.arms = BodyPartManager.Instance.GetRandomBodyPartByType(BodyPartType.Arms);
+            }
+            
+            // Get a random accessory
+            if (difficulty >= 4)
+            {
+                homun.accessories.Add(BodyPartManager.Instance.GetRandomBodyPartByType(BodyPartType.Accessory));
+            }
+            
+            homun.UpdateStats();
+            return homun;
+        }
         
         
     }
-}
