@@ -22,7 +22,7 @@ namespace Script.Colosseum
         public float enemyCharge;
 
         // Multiplier to slow down the charge rate
-        public float chargeSpeedMultiplier = 0.1f; // Ajustar este valor según sea necesario
+        public float chargeSpeedMultiplier = 0.5f; // Ajustar este valor según sea necesario
         public FightResult result = FightResult.OnGoing;
         
         // Start is called before the first frame update

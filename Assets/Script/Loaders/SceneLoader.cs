@@ -18,13 +18,13 @@ namespace Script.Loaders
 
         public void LoadFightScene()
         {
-            StartCoroutine(LoadFightSceneWithDelay());
+            SceneManager.LoadScene("FightScene");
         }
 
-        private IEnumerator LoadFightSceneWithDelay()
+        private IEnumerator LoadSceneWithDelay()
         {
             yield return new WaitForSeconds(delay);
-            SceneManager.LoadScene("FightScene");
+            SceneManager.LoadScene("CoreSelectionScene");
         }
 
         public void LoadCoreSelection()
@@ -39,7 +39,7 @@ namespace Script.Loaders
             };
             
             GameManager.Instance.SetCurrentPrizes(coreParts);
-            SceneManager.LoadScene("CoreSelectionScene");
+            StartCoroutine(LoadSceneWithDelay());
         }
 
         public void LoadBodyPartSelection(List<BodyPart> bodyParts)

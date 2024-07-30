@@ -22,7 +22,7 @@ namespace Script.Homun
             Mana = 100;
             DamageReduction = 0;
             Attack = 10;
-            Speed = 0.1f;
+            Speed = 1;
             AbilityPower = 10;
             Evasion = 0;
             CriticalChance = 5;

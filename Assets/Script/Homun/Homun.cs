@@ -159,22 +159,27 @@ namespace Script.Homun
         private (List<ModifierData>, List<ModifierData>) GetAllBodyPartsOnHitModifiers()
         {
             var enemyModifiers = new List<ModifierData>();
-            enemyModifiers.AddRange(core.stats.EnemyInflictingModifiers);
-            enemyModifiers.AddRange(legs.stats.EnemyInflictingModifiers);
-            enemyModifiers.AddRange(arms.stats.EnemyInflictingModifiers);
-            foreach (var accessory in accessories)
-            {
-                enemyModifiers.AddRange(accessory.stats.EnemyInflictingModifiers);
-            }
-
-
             var selfModifiers = new List<ModifierData>();
+            enemyModifiers.AddRange(core.stats.EnemyInflictingModifiers);
             selfModifiers.AddRange(core.stats.SelfInflictingModifiers);
-            selfModifiers.AddRange(legs.stats.SelfInflictingModifiers);
-            selfModifiers.AddRange(arms.stats.SelfInflictingModifiers);
-            foreach (var accessory in accessories)
+            if (legs != null)
             {
-                selfModifiers.AddRange(accessory.stats.SelfInflictingModifiers);
+                enemyModifiers.AddRange(legs.stats.EnemyInflictingModifiers);
+                selfModifiers.AddRange(legs.stats.SelfInflictingModifiers);
+            }
+            if (arms != null)
+            {
+                enemyModifiers.AddRange(arms.stats.EnemyInflictingModifiers);
+                selfModifiers.AddRange(arms.stats.SelfInflictingModifiers);
+            }
+           if (accessories != null)
+            {
+                foreach (var accessory in accessories)
+                {
+                    enemyModifiers.AddRange(accessory.stats.EnemyInflictingModifiers);
+                    selfModifiers.AddRange(accessory.stats.SelfInflictingModifiers);
+                
+                }
             }
 
 
