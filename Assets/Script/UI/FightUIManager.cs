@@ -1,7 +1,8 @@
-using System;
-using Script.Colosseum;
+using System.Collections.Generic;
+using Script.Modifiers;
 using TMPro;
 using UnityEngine;
+using Script.Colosseum;
 
 namespace Script.UI
 {
@@ -27,21 +28,46 @@ namespace Script.UI
             playerHealthText.text = $"Player: {currentFight.GetPlayerHealth()}";
             enemyHealthText.text = $"Enemy: {currentFight.GetEnemyHealth()}";
             
-            // Get the player's ModifierData, get the name and display them:
+            // Update player modifiers
             var playerModifiers = currentFight.GetPlayerModifiers();
             playerModifiersText.text = "Player: ";
-            foreach (var modifier in playerModifiers)
+            var playerModifierCounts = CountModifiers(playerModifiers);
+            foreach (var kvp in playerModifierCounts)
             {
-                playerModifiersText.text += modifier.modifier + "\n";
+                playerModifiersText.text += $"{ConvertStatusModifierToString(kvp.Key)} ({kvp.Value})\n";
             }
             
-            // Now the same but for the enemy
+            // Update enemy modifiers
             var enemyModifiers = currentFight.GetEnemyModifiers();
             enemyModifiersText.text = "Enemy: ";
-            foreach (var modifier in enemyModifiers)
+            var enemyModifierCounts = CountModifiers(enemyModifiers);
+            foreach (var kvp in enemyModifierCounts)
             {
-                enemyModifiersText.text += modifier.modifier + "\n";
+                enemyModifiersText.text += $"{ConvertStatusModifierToString(kvp.Key)} ({kvp.Value})\n";
             }
+        }
+
+        private Dictionary<StatusModifier, int> CountModifiers(List<ModifierData> modifiers)
+        {
+            var modifierCounts = new Dictionary<StatusModifier, int>();
+            foreach (var modifier in modifiers)
+            {
+                if (modifierCounts.ContainsKey(modifier.modifier))
+                {
+                    modifierCounts[modifier.modifier]++;
+                }
+                else
+                {
+                    modifierCounts[modifier.modifier] = 1;
+                }
+            }
+            return modifierCounts;
+        }
+
+        private string ConvertStatusModifierToString(StatusModifier modifier)
+        {
+            // Suponiendo que StatusModifier es una enumeración, convertirla a string
+            return modifier.ToString();
         }
     }
 }

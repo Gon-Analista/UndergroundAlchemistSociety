@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb75b2b351d943afa26e09a8e102d22c, type: 3}
   m_Name: legs_toad
   m_EditorClassIdentifier: 
-  id: legs_cheetah
-  name: Cheetah Legs
+  id: legs_toad
+  name: Toad Legs
   description: 
   partType: 2
-  sprite: {fileID: 21300000, guid: aa8d576f91dd04de9a13891f8ea927b4, type: 3}
-  color: {r: 1, g: 0.82638514, b: 0.16509432, a: 1}
-  maskTexture: {fileID: 2800000, guid: aa8d576f91dd04de9a13891f8ea927b4, type: 3}
+  sprite: {fileID: 21300000, guid: 79b0f5cd2eda043e4bc20fc42ef736b8, type: 3}
+  color: {r: 0.2424046, g: 0.8113208, b: 0.18752226, a: 1}
+  maskTexture: {fileID: 2800000, guid: 79b0f5cd2eda043e4bc20fc42ef736b8, type: 3}
   stats:
     incHealth: 0
     incMana: 0

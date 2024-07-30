@@ -14,6 +14,7 @@ namespace Script.Homun
     {
         public HomunStats Stats { get; set; }
         private List<HomunTemporalStats> TemporalStats { get; set; }
+        private float dotTimer = 0f;
         
         // Body Parts for Legs, Core and Arms. By default they are empty. One body part per type.
         public BodyPart core;
@@ -31,6 +32,10 @@ namespace Script.Homun
             Stats.AddBodyPartStats(core);
             Stats.AddBodyPartStats(legs);
             Stats.AddBodyPartStats(arms);
+            foreach (var accessory in accessories)
+            {
+                Stats.AddBodyPartStats(accessory);
+            }
         }
         
         public List<ModifierData> GetActiveStatusModifiers()
@@ -143,9 +148,23 @@ namespace Script.Homun
         {
             var enemyModifiers = new List<ModifierData>();
             enemyModifiers.AddRange(core.stats.EnemyInflictingModifiers);
+            enemyModifiers.AddRange(legs.stats.EnemyInflictingModifiers);
+            enemyModifiers.AddRange(arms.stats.EnemyInflictingModifiers);
+            foreach (var accessory in accessories)
+            {
+                enemyModifiers.AddRange(accessory.stats.EnemyInflictingModifiers);
+            }
+       
 
             var selfModifiers = new List<ModifierData>();
             selfModifiers.AddRange(core.stats.SelfInflictingModifiers);
+            selfModifiers.AddRange(legs.stats.SelfInflictingModifiers);
+            selfModifiers.AddRange(arms.stats.SelfInflictingModifiers);
+            foreach (var accessory in accessories)
+            {
+                selfModifiers.AddRange(accessory.stats.SelfInflictingModifiers);
+            }
+          
             
             return (enemyModifiers, selfModifiers);
         }
@@ -192,7 +211,6 @@ namespace Script.Homun
         {
             Stats = new HomunStats();
             TemporalStats = new List<HomunTemporalStats>();
-            accessories = new List<BodyPart>();
             
             UpdateStats();
             
@@ -206,21 +224,71 @@ namespace Script.Homun
             }
         }
         
-        private void Update()
+    private void Update(){
+        dotTimer += Time.deltaTime;
+
+        if (dotTimer >= 1f)
         {
-            // Check for temporal stats, and remove the ones that are over from the list.
-            for (var i = TemporalStats.Count - 1; i >= 0; i--)
+            ApplyDotEffects();
+            dotTimer = 0f; 
+        }
+
+        // Actualizar la duración de los efectos temporales
+        for (var i = TemporalStats.Count - 1; i >= 0; i--)
+        {
+            if (TemporalStats[i].Duration <= 0)
             {
-                if (TemporalStats[i].Duration <= 0)
-                {
-                    TemporalStats.RemoveAt(i);
-                }
-                else
-                {
-                    TemporalStats[i].Duration -= Time.deltaTime;
-                }
+                TemporalStats.RemoveAt(i);
+            }
+            else
+            {
+                TemporalStats[i].Duration -= Time.deltaTime;
             }
         }
+    }
+
+    private void ApplyDotEffects()
+    {
+        float poisonDamage = 0f;
+        float burnDamage = 0f;
+        float bleedDamage = 0f;
+
+        foreach (var stat in TemporalStats)
+        {
+            if (Time.time - stat.LastDotTime >= 1f)
+            {
+                switch (stat.DotType)
+                {
+                    case StatusModifier.Poison:
+                        poisonDamage += stat.DotDamage;
+                        break;
+                    case StatusModifier.Burn:
+                        burnDamage += stat.DotDamage;
+                        break;
+                    case StatusModifier.Bleed:
+                        bleedDamage += stat.DotDamage;
+                        break;
+                }
+                stat.LastDotTime = Time.time;
+            }
+        }
+
+        if (poisonDamage > 0)
+        {
+            ReceiveDamage(poisonDamage);
+            Debug.Log($"{gameObject.name} received {poisonDamage} poison damage");
+        }
+        if (burnDamage > 0)
+        {
+            ReceiveDamage(burnDamage);
+            Debug.Log($"{gameObject.name} received {burnDamage} burn damage");
+        }
+        if (bleedDamage > 0)
+        {
+            ReceiveDamage(bleedDamage);
+            Debug.Log($"{gameObject.name} received {bleedDamage} bleed damage");
+        }
+    }
         
         
     }

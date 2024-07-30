@@ -11,6 +11,9 @@ namespace Script.Colosseum
         public List<Homun.Homun> enemyFighters;
         public float playerCharge;
         public float enemyCharge;
+
+        // Multiplier to slow down the charge rate
+        public float chargeSpeedMultiplier = 0.1f; // Ajustar este valor según sea necesario
         
         // Start is called before the first frame update
         void Start()
@@ -69,9 +72,9 @@ namespace Script.Colosseum
                 return;
             }
             
-            // Update charge using the Homun's Speed stat. By default, the speed is 1, meaning, it takes 1 second to load.
-            playerCharge += Time.deltaTime * playerFighter.GetStats().Speed;
-            enemyCharge += Time.deltaTime * enemyFighters[0].GetStats().Speed;
+            // Update charge using the Homun's Speed stat and the chargeSpeedMultiplier
+            playerCharge += Time.deltaTime * playerFighter.GetStats().Speed * chargeSpeedMultiplier;
+            enemyCharge += Time.deltaTime * enemyFighters[0].GetStats().Speed * chargeSpeedMultiplier;
             
             // Check if the player and enemy are able to attack. If they attack at the same time, 50% chance of the player attacking first.
             var isEnemyAttacking = enemyCharge >= 1;
