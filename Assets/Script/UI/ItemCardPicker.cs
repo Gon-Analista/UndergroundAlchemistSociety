@@ -1,33 +1,34 @@
 using System;
+using System.Collections.Generic;
 using Script.BodyParts;
+using Script.DropSystem;
+using Script.Loaders;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Script.UI
 {
     public class ItemCardPicker : MonoBehaviour
     {
-        public BodyPart bodyPart;
-
-        private GameObject InitializeBodyPart(Vector2 localPosition)
+        private List<ItemCard> Cards = new List<ItemCard>();
+        public List<BodyPart> bodyParts;
+        private static readonly List<Vector2> CardPositions = new List<Vector2>
         {
-            if (bodyPart != null)
-            {
-                GameObject partObject = new GameObject(bodyPart.name);
-                partObject.transform.parent = transform; // Set as child of Homun
-                partObject.transform.localPosition = localPosition;
-
-                SpriteRenderer spriteRenderer = partObject.AddComponent<SpriteRenderer>();
-                BodyPartDisplay bodyPartDisplay = partObject.AddComponent<BodyPartDisplay>();
-                bodyPartDisplay.SetBodyPart(bodyPart, false);
-
-                return partObject;
-            }
-            return null;
-        }
+            new Vector2(-450, 0),
+            new Vector2(0, 0),
+            new Vector2(450, 0)
+        };
         
-        public void Start()
+        private void Start()
         {
+            bodyParts = GameManager.Instance.currentPrizes;
             
+            foreach (var part in bodyParts)
+            {
+                ItemCard card = ItemCard.CreateItemCardPicker(part, transform);
+                Cards.Add(card);
+                card.InitializeCardButton(CardPositions[bodyParts.IndexOf(part)]);
+            }
         }
     }
 }
