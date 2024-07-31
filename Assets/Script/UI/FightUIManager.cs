@@ -97,6 +97,7 @@ namespace Script.UI
                     StatusModifier.Weakness => "icon_weakness",
                     StatusModifier.Vulnerability => "icon_vulnerability",
                     StatusModifier.Burn => "icon_burn",
+                    StatusModifier.Blind => "icon_blind",
                     _ => "icon_attack",
                 };
 
