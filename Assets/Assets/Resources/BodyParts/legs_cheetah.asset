@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: legs_cheetah
   name: Cheetah Legs
-  description: 
+  description: Legs that enhance your speed  and slightly increase your critical
+    chance and damage.
   partType: 2
   sprite: {fileID: 21300000, guid: aa8d576f91dd04de9a13891f8ea927b4, type: 3}
   color: {r: 1, g: 0.82638514, b: 0.16509432, a: 1}
@@ -24,11 +25,11 @@ MonoBehaviour:
     incMana: 0
     incDamageReduction: 0
     incAttack: 0
-    incSpeed: 0
+    incSpeed: 0.5
     incAbilityPower: 0
     incEvasion: 0
-    incCriticalChance: 0
-    incCriticalDamage: 0
+    incCriticalChance: 10
+    incCriticalDamage: 5
     incAccuracy: 0
     incPercentHealth: 0
     incPercentMana: 0

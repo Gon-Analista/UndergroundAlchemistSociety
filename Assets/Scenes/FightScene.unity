@@ -430,18 +430,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageTextPrefab: {fileID: 7929284904416598915, guid: b6b52ffd5e4044a9b9ff80477868074f, type: 3}
-  enemyDamageZone:
-    serializedVersion: 2
-    x: 326
-    y: -119
-    width: 245
-    height: 200
-  playerDamageZone:
-    serializedVersion: 2
-    x: -326
-    y: -119
-    width: 245
-    height: 200
 --- !u!4 &514359490
 Transform:
   m_ObjectHideFlags: 0
@@ -814,7 +802,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 238, y: 169}
+  m_AnchoredPosition: {x: 407.83, y: 205.19}
   m_SizeDelta: {x: 452.2703, y: 309.618}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &641152138
@@ -1422,7 +1410,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -434, y: 169}
+  m_AnchoredPosition: {x: -413.86, y: 205.19}
   m_SizeDelta: {x: 452.2703, y: 309.618}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1496538417

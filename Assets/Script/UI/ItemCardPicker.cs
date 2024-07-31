@@ -14,9 +14,9 @@ namespace Script.UI
         public List<BodyPart> bodyParts;
         private static readonly List<Vector2> CardPositions = new List<Vector2>
         {
-            new Vector2(-450, 0),
-            new Vector2(0, 0),
-            new Vector2(450, 0)
+            new Vector2(-390, 0),
+            new Vector2(20, 0),
+            new Vector2(430, 0)
         };
         
         private void Start()

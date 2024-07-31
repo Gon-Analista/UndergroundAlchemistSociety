@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: legs_toad
   name: Toad Legs
-  description: 
+  description: Legs that slightly increase your health and grant you a small chance
+    to poison your enemies.
   partType: 2
   sprite: {fileID: 21300000, guid: 79b0f5cd2eda043e4bc20fc42ef736b8, type: 3}
   color: {r: 0.2424046, g: 0.8113208, b: 0.18752226, a: 1}
   maskTexture: {fileID: 2800000, guid: 79b0f5cd2eda043e4bc20fc42ef736b8, type: 3}
   stats:
-    incHealth: 0
+    incHealth: 50
     incMana: 0
     incDamageReduction: 0
     incAttack: 0
@@ -41,4 +42,7 @@ MonoBehaviour:
     incPercentCriticalDamage: 0
     incPercentAccuracy: 0
     selfInflictingModifiers: []
-    enemyInflictingModifiers: []
+    enemyInflictingModifiers:
+    - modifier: 5
+      chance: 0.1
+      duration: 999

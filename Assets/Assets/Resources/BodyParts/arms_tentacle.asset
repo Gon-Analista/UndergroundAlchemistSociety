@@ -24,8 +24,8 @@ MonoBehaviour:
     incHealth: 0
     incMana: 0
     incDamageReduction: 0
-    incAttack: 0
-    incSpeed: 0
+    incAttack: 85
+    incSpeed: -0.3
     incAbilityPower: 0
     incEvasion: 0
     incCriticalChance: 0

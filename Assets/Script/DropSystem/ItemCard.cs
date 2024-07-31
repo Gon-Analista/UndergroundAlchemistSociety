@@ -4,6 +4,7 @@ using Script.Loaders;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 namespace Script.DropSystem
 {
@@ -71,9 +72,12 @@ namespace Script.DropSystem
                  
                  // On Click event
                  Button buttonComponent = itemCardButton.GetComponent<Button>();
-                 buttonComponent.onClick.AddListener(() =>
+                 buttonComponent.onClick.AddListener(async () =>
                  {
-                     GameManager.Instance.SelectDropAndContinue(bodyPart.id);
+                    AudioClip selectSound = Resources.Load<AudioClip>("Sounds/button");
+                    AudioSource.PlayClipAtPoint(selectSound, Camera.main.transform.position, 0.17f);
+                    await Task.Delay(1000);
+                    GameManager.Instance.SelectDropAndContinue(bodyPart.id);
                  });
              }
              return null;
