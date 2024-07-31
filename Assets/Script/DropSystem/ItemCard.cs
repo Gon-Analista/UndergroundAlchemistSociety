@@ -2,7 +2,6 @@ using System;
 using Script.BodyParts;
 using Script.Loaders;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -45,6 +44,8 @@ namespace Script.DropSystem
  
                  TextMeshProUGUI descText = itemCardButton.transform.Find("Description").GetComponent<TextMeshProUGUI>();
                  descText.text = bodyPart.description;
+                 TextMeshProUGUI partTypeText = itemCardButton.transform.Find("PartType").GetComponent<TextMeshProUGUI>();
+                 partTypeText.text = bodyPart.partType.ToString();
                  
                  Image buttonImage = itemCardButton.transform.Find("Image").GetComponent<Image>();
                  buttonImage.sprite = bodyPart.sprite;

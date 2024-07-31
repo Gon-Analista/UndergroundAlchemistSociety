@@ -22,6 +22,10 @@ namespace Script.UI
 
         private void Update()
         {
+            if (currentFight?.enemyFighter == null || currentFight?.playerFighter == null)
+            {
+                return;
+            }
             playerChargeText.text = $"Player: {(currentFight.playerCharge * 100):0}%";
             enemyChargeText.text = $"Enemy: {(currentFight.enemyCharge * 100):0}%";
             

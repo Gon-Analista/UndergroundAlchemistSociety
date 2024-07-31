@@ -94,5 +94,24 @@ namespace Script.Loaders
             }
             return sample;
         }
+        
+        // Get a random sample, without repeating the same bodyparts of all body types EXCEPT core
+        public List<BodyPart> GetRandomSampleWithoutCore(int count)
+        {
+            var sample = new List<BodyPart>();
+            for (int i = 0; i < count; i++)
+            {
+                var randomPart = bodyPartDatabase[Random.Range(0, bodyPartDatabase.Count)];
+                if (!sample.Contains(randomPart) && randomPart.partType != BodyPartType.Core)
+                {
+                    sample.Add(randomPart);
+                }
+                else
+                {
+                    i--;
+                }
+            }
+            return sample;
+        }
     }
 }

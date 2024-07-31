@@ -10,7 +10,7 @@ namespace Script.Loaders
     {
         public static GameManager Instance;
 
-        public Homun.Homun homun;
+        public Homun.HomunDetails homun;
         public List<BodyPart> bodyParts;
         public int round;
         public int fighterPoints;
@@ -25,7 +25,7 @@ namespace Script.Loaders
         
         public int CalculateDifficulty()
         {
-            return GameManager.Instance.round / 5;
+            return round / 5;
         }
         
         public void SetCurrentPrizes(List<BodyPart> prizes)
@@ -99,6 +99,7 @@ namespace Script.Loaders
                 SceneLoader sceneLoader = gameObject.AddComponent<SceneLoader>();
                 sceneLoader.LoadEquipmentSetupScene();
             }
+            ShowHomun(false);
         }
         
         public void SelectCoreAndStart(string coreId)
@@ -106,15 +107,26 @@ namespace Script.Loaders
             var core = BodyPartManager.Instance.GetPartById(coreId);
             if (homun == null)
             {
-                homun = gameObject.AddComponent<Homun.Homun>();
+                homun = gameObject.AddComponent<Homun.HomunDetails>();
                 homun.isPlayer = true;
             }
 
-            homun.gameObject.SetActive(true);
             homun.EquipBodyPart(core);
             SceneLoader sceneLoader = gameObject.AddComponent<SceneLoader>();
             sceneLoader.LoadFightScene();
         }
-
+        
+        public void ShowHomun(bool status)
+        {
+            // check if homun is defined, and if so, hide its rendering
+            if (homun != null)
+            {
+                var render = GetComponent<SpriteRenderer>();
+                if (render != null)
+                {
+                    render.enabled = status;
+                }
+            }
+        }
     }
 }

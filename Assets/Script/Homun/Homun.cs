@@ -4,6 +4,7 @@ using System.Data;
 using Script.BodyParts;
 using Script.Loaders;
 using Script.Modifiers;
+using Script.UI;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -24,6 +25,8 @@ namespace Script.Homun
 
         public bool isPlayer;
 
+        public DamageTextManager damageTextManager;
+        
         private void UpdateStats()
         {
             // Reset stats
@@ -194,7 +197,10 @@ namespace Script.Homun
             damage -= damage * (damageReduction / 100);
             // Apply the damage to the health
             Stats.Health -= damage;
-            Debug.Log("Received " + damage + " damage. Current health: " + Stats.Health);
+            
+            Vector3 textPosition = transform.position + new Vector3(0, 2, 0); // Adjust as needed
+            
+            damageTextManager.ShowDamage((int)damage, false, !isPlayer);
         }
 
         public void ReceiveTemporalStatus(ModifierData modifierData)
@@ -229,7 +235,7 @@ namespace Script.Homun
         {
             Stats = new HomunStats();
             TemporalStats = new List<HomunTemporalStats>();
-
+            
             UpdateStats();
 
             // Initialize the body parts GameObjects
@@ -239,6 +245,13 @@ namespace Script.Homun
             foreach (var accessory in accessories)
             {
                 InitializeBodyPart(accessory, Vector2.zero);
+            }
+            
+            // Find the component named "DamageManager"
+            var damageTextManagerObject = GameObject.Find("DamageManager");
+            if (damageTextManagerObject != null)
+            {
+                damageTextManager = damageTextManagerObject.GetComponent<DamageTextManager>();
             }
         }
 
@@ -312,14 +325,10 @@ namespace Script.Homun
             }
         }
 
-        public void Clone(Homun homun)
+        public void Clone(HomunDetails homun)
         {
             Stats = homun.Stats.Clone();
             TemporalStats = new List<HomunTemporalStats>();
-            foreach (var stat in homun.TemporalStats)
-            {
-                TemporalStats.Add(stat);
-            }
 
             core = homun.core;
             legs = homun.legs;

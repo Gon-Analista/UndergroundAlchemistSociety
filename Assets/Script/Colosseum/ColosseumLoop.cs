@@ -22,7 +22,7 @@ namespace Script.Colosseum
             var round = GameManager.Instance.round;
             var partManager = BodyPartManager.Instance;
             
-            parts.AddRange(partManager.GetRandomSample(3));
+            parts.AddRange(partManager.GetRandomSampleWithoutCore(3));
             
             return parts;
         }

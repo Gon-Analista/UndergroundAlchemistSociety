@@ -63,6 +63,12 @@ namespace Script.Colosseum
         // Update is called once per frame
         void Update()
         {
+            // Just a random check to avoid bugs
+            if (playerFighter == null || enemyFighter == null)
+            {
+                return;
+            }
+            
             // Check if the player has enough health to continue
             if (playerFighter.Stats.Health <= 0)
             {
