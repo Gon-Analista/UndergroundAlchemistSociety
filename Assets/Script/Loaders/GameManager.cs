@@ -25,7 +25,7 @@ namespace Script.Loaders
         
         public int CalculateDifficulty()
         {
-            return round / 5;
+            return round;
         }
         
         public void SetCurrentPrizes(List<BodyPart> prizes)
@@ -93,11 +93,11 @@ namespace Script.Loaders
             }
             else
             {
-                bodyParts.Add(
+                homun.EquipBodyPart(
                     BodyPartManager.Instance.GetPartById(coreId)
                 );
                 SceneLoader sceneLoader = gameObject.AddComponent<SceneLoader>();
-                sceneLoader.LoadEquipmentSetupScene();
+                sceneLoader.LoadFightScene();
             }
             ShowHomun(false);
         }

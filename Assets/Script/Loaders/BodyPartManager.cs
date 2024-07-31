@@ -52,7 +52,7 @@ namespace Script.Loaders
             // Exclude all parts that contain "weakling"
             var parts = GetBodyPartsByType(type);
             // Remove all parts that contain "weakling"
-            parts.RemoveAll(part => part.name.Contains("weakling"));
+            parts.RemoveAll(part => part.id.Contains("weakling"));
             return parts[Random.Range(0, parts.Count)];
         }
         
@@ -75,7 +75,6 @@ namespace Script.Loaders
             }
             return sample;
         }
-        
         // Get a random sample, without repeating the same bodyparts.
         public List<BodyPart> GetRandomSample(int count)
         {
@@ -103,6 +102,24 @@ namespace Script.Loaders
             {
                 var randomPart = bodyPartDatabase[Random.Range(0, bodyPartDatabase.Count)];
                 if (!sample.Contains(randomPart) && randomPart.partType != BodyPartType.Core)
+                {
+                    sample.Add(randomPart);
+                }
+                else
+                {
+                    i--;
+                }
+            }
+            return sample;
+        }
+        
+        public List<BodyPart> GetRandomSampleWithoutAccessories(int count)
+        {
+            var sample = new List<BodyPart>();
+            for (int i = 0; i < count; i++)
+            {
+                var randomPart = bodyPartDatabase[Random.Range(0, bodyPartDatabase.Count)];
+                if (!sample.Contains(randomPart) && randomPart.partType != BodyPartType.Accessory && randomPart.partType != BodyPartType.Core)
                 {
                     sample.Add(randomPart);
                 }

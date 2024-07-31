@@ -22,8 +22,15 @@ namespace Script.Colosseum
             var round = GameManager.Instance.round;
             var partManager = BodyPartManager.Instance;
             
-            parts.AddRange(partManager.GetRandomSampleWithoutCore(3));
-            
+            // If GameManager.Instance.homun doesn't have legs, we should GetRandomSampleWithoutAccessory, else, withoutCore
+            if (GameManager.Instance.homun.legs == null)
+            {
+                parts.AddRange(partManager.GetRandomSampleWithoutAccessories(3));
+            }
+            else
+            {
+                parts.AddRange(partManager.GetRandomSampleWithoutCore(3));
+            }
             return parts;
         }
         

@@ -25,6 +25,8 @@ namespace Script.Colosseum
         public float chargeSpeedMultiplier = 0.5f; // Ajustar este valor según sea necesario
         public FightResult result = FightResult.OnGoing;
         
+        public float timer;
+        
         // Start is called before the first frame update
         private void Start()
         {
@@ -38,6 +40,7 @@ namespace Script.Colosseum
             var enemyHomunPosMarker = GameObject.Find("EnemyHomun");
             enemyFighter = Homun.Homun.CreateRandomHomun(GameManager.Instance.CalculateDifficulty(), enemyHomunPosMarker.gameObject);
             result = FightResult.OnGoing;
+            timer = 60;
         }
 
         public int GetPlayerHealth()
@@ -82,6 +85,15 @@ namespace Script.Colosseum
             {
                 // Player won
                 result = FightResult.Won;
+                return;
+            }
+            
+            // Update timer
+            timer -= Time.deltaTime;
+            // If timer reaches <= 0, the one with most hp wins
+            if (timer <= 0)
+            {
+                result = playerFighter.Stats.Health > enemyFighter.Stats.Health ? FightResult.Won : FightResult.Lost;
                 return;
             }
             
