@@ -45,9 +45,5 @@ MonoBehaviour:
     selfInflictingModifiers: []
     enemyInflictingModifiers:
     - modifier: 2
-<<<<<<< Updated upstream
       chance: 0.4
-=======
-      chance: 0.33
->>>>>>> Stashed changes
       duration: 1
