@@ -24,7 +24,7 @@ namespace Script.Homun
             {
                 case StatusModifier.Slow:
                     // Temporal stat with incPercentSpeed -50%
-                    incPercentSpeed = -0.5f;
+                    incPercentSpeed = -0.2f;
                     Duration = modifierData.duration;
                     break;
                 case StatusModifier.Stun:
@@ -51,17 +51,17 @@ namespace Script.Homun
                     break;
                 // TODO: DoTs
                 case StatusModifier.Poison:
-                    DotDamage = 0.2f; 
+                    DotDamage = 0.3f; 
                     DotType = StatusModifier.Poison;
                     Duration = modifierData.duration;
                     break;
                 case StatusModifier.Burn: 
-                    DotDamage = 0.7f;
+                    DotDamage = 0.6f;
                     DotType = StatusModifier.Burn;
                     Duration = modifierData.duration;
                     break;
                 case StatusModifier.Bleed:
-                    DotDamage = 0.5f;
+                    DotDamage = 0.4f;
                     DotType = StatusModifier.Bleed;
                     Duration = modifierData.duration;
                     break;
@@ -77,8 +77,8 @@ namespace Script.Homun
                     Duration = modifierData.duration;
                     break;
                 case StatusModifier.Vulnerability:
-                    // Decreases Defense by 25%
-                    incPercentDamageReduction = -0.25f;
+                    // Decreases Defense by 50%
+                    incPercentDamageReduction = -0.5f;
                     Duration = modifierData.duration;
                     break;
                 case StatusModifier.Fear:

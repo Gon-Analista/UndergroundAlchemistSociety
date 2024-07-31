@@ -12,9 +12,11 @@ namespace Script.BodyParts
         
         [SerializeField] public BodyPartType partType;
         [SerializeField] public Sprite sprite;
+        [SerializeField] public Sprite iconSprite;
         [SerializeField] public Color color = Color.white;
         [SerializeField] public Texture2D maskTexture;
         [SerializeField] public BodyPartStats stats;
+
         
 
         public BodyPart(BodyPartType type)

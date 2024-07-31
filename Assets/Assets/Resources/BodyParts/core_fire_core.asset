@@ -18,6 +18,7 @@ MonoBehaviour:
     burn enemies.
   partType: 0
   sprite: {fileID: 21300000, guid: 1c4e45c7357224bd0ae641b6962e7684, type: 3}
+  iconSprite: {fileID: 21300000, guid: 7cd7ddb8737a33b46abedce7abf50863, type: 3}
   color: {r: 1, g: 0, b: 0.039215565, a: 1}
   maskTexture: {fileID: 2800000, guid: 1c4e45c7357224bd0ae641b6962e7684, type: 3}
   stats:

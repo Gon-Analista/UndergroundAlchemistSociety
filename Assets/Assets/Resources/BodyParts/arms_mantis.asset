@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb75b2b351d943afa26e09a8e102d22c, type: 3}
+  m_Name: arms_mantis
+  m_EditorClassIdentifier: 
+  id: arms_mantis
+  name: Mantis Arms
+  description: Deadly mantis arms that increase critical chance, critical damage
+    and attack.
+  partType: 1
+  sprite: {fileID: 21300000, guid: 84084d0ea3e04f344b46133156990ea0, type: 3}
+  iconSprite: {fileID: 21300000, guid: 0fee4bc6ca91ddb4fb982683384c3f77, type: 3}
+  color: {r: 0.2424046, g: 0.8113208, b: 0.18752226, a: 1}
+  maskTexture: {fileID: 2800000, guid: 84084d0ea3e04f344b46133156990ea0, type: 3}
+  stats:
+    incHealth: 0
+    incMana: 0
+    incDamageReduction: 0
+    incAttack: 25
+    incSpeed: 0
+    incAbilityPower: 0
+    incEvasion: 0
+    incCriticalChance: 25
+    incCriticalDamage: 15
+    incAccuracy: 0
+    incPercentHealth: 0
+    incPercentMana: 0
+    incPercentDamageReduction: 0
+    incPercentAttack: 0
+    incPercentSpeed: 0
+    incPercentAbilityPower: 0
+    incPercentEvasion: 0
+    incPercentCriticalChance: 0
+    incPercentCriticalDamage: 0
+    incPercentAccuracy: 0
+    selfInflictingModifiers: []
+    enemyInflictingModifiers: []

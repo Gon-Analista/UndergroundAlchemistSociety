@@ -18,6 +18,7 @@ MonoBehaviour:
     chance and damage.
   partType: 2
   sprite: {fileID: 21300000, guid: aa8d576f91dd04de9a13891f8ea927b4, type: 3}
+  iconSprite: {fileID: 21300000, guid: 0c6ea7300185d894eb05a580b5373981, type: 3}
   color: {r: 1, g: 0.82638514, b: 0.16509432, a: 1}
   maskTexture: {fileID: 2800000, guid: aa8d576f91dd04de9a13891f8ea927b4, type: 3}
   stats:
