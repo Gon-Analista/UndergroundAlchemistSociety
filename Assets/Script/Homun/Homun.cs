@@ -377,9 +377,14 @@ namespace Script.Homun
             }
 
             // Get a random accessory
-            if (difficulty >= 4)
+            if (difficulty == 4)
             {
                 homun.accessories.Add(BodyPartManager.Instance.GetRandomBodyPartByType(BodyPartType.Accessory));
+            }
+            
+            if (difficulty >= 5)
+            {
+                homun.accessories.AddRange(BodyPartManager.Instance.GetRandomSampleByType(BodyPartType.Accessory, 2));
             }
 
             homun.UpdateStats();

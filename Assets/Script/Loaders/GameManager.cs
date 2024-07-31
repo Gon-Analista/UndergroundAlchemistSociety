@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Script.BodyParts;
+using Script.Homun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,6 +22,14 @@ namespace Script.Loaders
         static void InitializeOnLoad()
         {
             var bodyPartManager = Loaders.BodyPartManager.Instance;
+        }
+        
+        // Destroy and recreate instnace
+        public void Reset()
+        {
+            round = 0;
+            Destroy(homun);
+            homun = gameObject.AddComponent<HomunDetails>();
         }
         
         public int CalculateDifficulty()

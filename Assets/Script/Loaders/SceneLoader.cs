@@ -4,6 +4,7 @@ using Script.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using Script.Homun;
 
 namespace Script.Loaders
 {
@@ -13,12 +14,23 @@ namespace Script.Loaders
 
         public void LoadTitleScreen()
         {
+            GameManager.Instance.Reset();
             SceneManager.LoadScene("TitleScreen");
         }
 
         public void LoadFightScene()
         {
             SceneManager.LoadScene("FightScene");
+        }
+
+        public void LoadVictoryScreen()
+        {
+            SceneManager.LoadScene("VictoryScreen");
+        }
+
+        public void LoadGameOverScreen()
+        {
+            SceneManager.LoadScene("GameOverScreen");
         }
 
         private IEnumerator LoadSceneWithDelay()

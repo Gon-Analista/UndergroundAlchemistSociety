@@ -47,7 +47,18 @@ namespace Script.Colosseum
         {
             if (currentFight.result == FightResult.Won)
             {
+                if (GameManager.Instance.round >= 5)
+                {
+                     SceneLoader sceneLoader = gameObject.AddComponent<SceneLoader>();
+                     sceneLoader.LoadVictoryScreen();
+                     return;
+                }
                 GameManager.Instance.SetPartPrizesAndShow(GeneratePrize());
+            }
+            else if(currentFight.result == FightResult.Lost)
+            {
+                SceneLoader sceneLoader = gameObject.AddComponent<SceneLoader>();
+                sceneLoader.LoadGameOverScreen();
             }
         }
     }
