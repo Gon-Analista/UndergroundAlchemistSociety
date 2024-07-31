@@ -58,13 +58,29 @@ namespace Script.DropSystem
                  Button buttonComponent = itemCardButton.GetComponent<Button>();
                  buttonComponent.onClick.AddListener(async () =>
                  {
-                    AudioClip selectSound = Resources.Load<AudioClip>("Sounds/button");
-                    AudioSource.PlayClipAtPoint(selectSound, Camera.main.transform.position, 0.17f);
-                    await Task.Delay(1000);
-                    GameManager.Instance.SelectDropAndContinue(bodyPart.id);
+                     AudioClip selectSound = Resources.Load<AudioClip>("Sounds/button");
+                     if (selectSound == null)
+                     {
+                         Debug.LogError("AudioClip 'Sounds/button' not found!");
+                         return;
+                     }
+
+                     AudioSource.PlayClipAtPoint(selectSound, Camera.main.transform.position, 0.17f);
+                     Invoke(nameof(DelayedAction), 1.0f);
                  });
+
              }
              return null;
          }   
+         private void DelayedAction()
+         {
+             if (GameManager.Instance == null)
+             {
+                 Debug.LogError("GameManager.Instance is null!");
+                 return;
+             }
+
+             GameManager.Instance.SelectDropAndContinue(bodyPart.id);
+         }
     }
 }

@@ -96,6 +96,7 @@ namespace Script.Loaders
 
         public void SelectDropAndContinue(string coreId)
         {
+            Debug.LogError("SelectDropAndContinue");
             if (round == 0)
             {
                 SelectCoreAndStart(coreId);
@@ -113,13 +114,16 @@ namespace Script.Loaders
         
         public void SelectCoreAndStart(string coreId)
         {
+            Debug.LogError("SelectCoreAndStart");
             var core = BodyPartManager.Instance.GetPartById(coreId);
             if (homun == null)
             {
+                Debug.LogError("DefaultHomunCreated");
                 homun = gameObject.AddComponent<Homun.HomunDetails>();
                 homun.isPlayer = true;
             }
 
+            Debug.LogError("EquippedPart");
             homun.EquipBodyPart(core);
             SceneLoader sceneLoader = gameObject.AddComponent<SceneLoader>();
             sceneLoader.LoadFightScene();
